@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.db import models
 from django.db.models.fields import CharField
 from django.contrib.auth.models import User
@@ -7,6 +8,7 @@ class Category(models.Model):
     name = models.CharField(max_length=250)
 
 class Question(models.Model):
+    categories = models.ManyToManyField(Category, related_name='questions')
     choice_answer = (('a','A'), ('a', 'B'), ('c', 'C'))
     title = models.CharField(max_length=250)
     text = models.TextField()
