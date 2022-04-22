@@ -7,9 +7,12 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Category(models.Model):
     name = models.CharField(max_length=250)
 
+    def __str__(self):
+        return self.name
+
 class Question(models.Model):
     categories = models.ManyToManyField(Category, related_name='questions')
-    choice_answer = (('a','A'), ('a', 'B'), ('c', 'C'))
+    choice_answer = (('a','A'), ('b', 'B'), ('c', 'C'))
     title = models.CharField(max_length=250)
     text = models.TextField()
     a = models.TextField()
