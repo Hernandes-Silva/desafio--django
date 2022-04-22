@@ -22,7 +22,8 @@ class ListCreateAPIQuestion(viewsets.ModelViewSet):
 def generate_quiz(request, pk):
 
     questions = list(Question.objects.filter(categories = pk))
-    questions = random.sample(questions, 2)
+    if len(questions) >=10:
+        questions = random.sample(questions, 10)
     serializer = QuestionSerializer(questions, many=True)
     
     return Response(serializer.data)
