@@ -13,13 +13,17 @@ class ListCreateAPICategory(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+    
 class ListCreateAPIQuestion(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class= QuestionSerializer
 
-class CreateAPIQuiz(generics.CreateAPIView):
-    serializer_class = QuizSerializer
-    queryset = Quiz.objects.all()
-    def perform_create(self,serializer):
-        serializer.save(user=self.request.user)
+@api_view(['GET', ])
+def generate_quiz(request, pk):
+
+    questions = list(Question.objects.filter(categories = pk))
+    questions = random.sample(questions, 2)
+    serializer = QuestionSerializer(questions, many=True)
+    
+    return Response(serializer.data)
     
