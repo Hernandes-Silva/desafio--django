@@ -22,7 +22,7 @@ class Question(models.Model):
     answer = models.CharField(max_length=1, choices=choice_answer)
 
 class QuizQuestion(models.Model):
-    question = models.ForeignKey(Question, related_name='quiz_question')
+    question = models.ForeignKey(Question, related_name='quiz_question', on_delete=models.CASCADE)
     user_answer = models.CharField(max_length=1, choices=choice_answer)
 
 class Quiz(models.Model):
