@@ -9,11 +9,11 @@ from quiz.models import Category, Question, Quiz
 from quiz.serializers import CategorySerializer, QuestionSerializer, QuizSerializer
 # Create your views here.
 
-class ListCreateAPICategory(viewsets.ModelViewSet):
+class APICategory(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-class ListCreateAPIQuestion(viewsets.ModelViewSet):
+class APIQuestion(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class= QuestionSerializer
 

@@ -1,11 +1,12 @@
+from posixpath import basename
 from django.urls import path
-from quiz.views import ListCreateAPICategory, ListCreateAPIQuestion, generate_quiz
+from quiz.views import APICategory, APIQuestion, generate_quiz
 from rest_framework import routers
 from django.urls.conf import include
 
 router = routers.DefaultRouter()
-router.register(r'category', ListCreateAPICategory)
-router.register(r'question', ListCreateAPIQuestion)
+router.register(r'category', APICategory, basename='category')
+router.register(r'question', APIQuestion, basename='question')
 
 
 urlpatterns = [
