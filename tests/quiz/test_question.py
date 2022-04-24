@@ -65,5 +65,16 @@ def test_put_question_detail(client, question_f):
     assert response.status_code == 200
     assert question_f.title == payload['title']
 
+@pytest.mark.django_db
+def test_delete_question_detail(client, question_f):
+    response = client.delete(reverse('question-detail', kwargs={'pk':question_f.id}))
+    
+    assert response.status_code == 204
+    assert len(Question.objects.all()) == 0
+
+    with pytest.raises(Question.DoesNotExist):
+        question_f.refresh_from_db()
+
+
 
    
