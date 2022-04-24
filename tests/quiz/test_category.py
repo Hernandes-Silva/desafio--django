@@ -1,12 +1,8 @@
-from ast import arg
 from django.urls import reverse
 import pytest
 from quiz.models import Category
 
 # Create your tests here.
-@pytest.fixture
-def category_f(db):
-    return Category.objects.create(name="Category")
 
 @pytest.mark.django_db
 def test_post_category(client):
@@ -32,6 +28,12 @@ def test_get_category_detail(client, category_f):
     assert response.data.get('name') == category_f.name
 
 @pytest.mark.django_db
+def test_get_category_detail_err(client, category_f):
+    response = client.get(reverse('category-detail',kwargs={'pk':0}))
+
+    assert response.status_code == 404
+
+@pytest.mark.django_db
 def test_put_category_detail(client, category_f):  
     payload = {'name': "Change description"}
 
@@ -47,6 +49,6 @@ def test_delete_category_deatil(client, category_f):
     
     assert response.status_code == 204
     assert len(Category.objects.filter(id=category_f.id)) == 0
-    
+
     with pytest.raises(Category.DoesNotExist):
         category_f.refresh_from_db()
