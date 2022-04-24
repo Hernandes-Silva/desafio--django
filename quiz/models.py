@@ -26,6 +26,7 @@ class QuizQuestion(models.Model):
     user_answer = models.CharField(max_length=1, choices=choice_answer)
 
 class Quiz(models.Model):
+    category = models.ForeignKey(Category, related_name='quizzes', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='quizzes', on_delete=models.CASCADE)
     questions = models.ManyToManyField(QuizQuestion, related_name='quiz')
     score = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
