@@ -1,12 +1,13 @@
-from django.db.models.query import QuerySet
-from django.shortcuts import render
 
+from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import random
-from quiz.models import Category, Question, Quiz
+from django.http import JsonResponse
+from quiz.models import Category, Question, Quiz, QuizQuestion
 from quiz.serializers import CategorySerializer, QuestionSerializer, QuizSerializer
+from django.contrib.auth.models import User
 # Create your views here.
 
 class APICategory(viewsets.ModelViewSet):
@@ -26,15 +27,41 @@ def generate_quiz(request, pk):
     
     return Response(serializer.data)
 
-""" @api_view(['POST',])
+@api_view(['POST',])
 def finish_quiz(request):
-    questions = request.data.getlist('questions')
+    questions = request.data.get('questions')
     category = request.data.get('category')
     score = 0
-    if len(questions) <=10:
+    quiz_questions = []
+
+    if len(questions) <= 10:
         for question in questions:
-            correct = Question.objects.get(question['question_id']).answer == question['answer']
-            if correct """
+            query_question =  Question.objects.get(id=question['question_id'], categories = category)
+
+            quiz_question = QuizQuestion.objects\
+                                        .create(
+                                            question=query_question,
+                                            user_answer=question['user_answer']
+                                        )
+            quiz_questions.append(quiz_question)
+
+            correct = query_question.answer == question['user_answer']
+
+            if correct: score += 1
+            elif score > 0: score -= 1
+
+        quiz = Quiz.objects.create(
+                                    user = User.objects.all().first(),
+                                    score= score,
+                                    category= Category.objects.get(id=category)
+                                )
+
+        quiz.questions.set(quiz_questions)
+        quiz.save()
+        
+        resp = {'status_code': 201, 'score': score}
+
+        return JsonResponse(resp)
 
 
 

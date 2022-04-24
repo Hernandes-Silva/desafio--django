@@ -1,6 +1,6 @@
 from posixpath import basename
 from django.urls import path
-from quiz.views import APICategory, APIQuestion, generate_quiz
+from quiz.views import APICategory, APIQuestion, finish_quiz, generate_quiz
 from rest_framework import routers
 from django.urls.conf import include
 
@@ -12,4 +12,5 @@ router.register(r'question', APIQuestion, basename='question')
 urlpatterns = [
     path('', include(router.urls)),
     path('generate-quiz/<int:pk>/', generate_quiz, name='generate-quiz'),
+    path('finish-quiz', finish_quiz, name='finish-quiz'),
 ]
