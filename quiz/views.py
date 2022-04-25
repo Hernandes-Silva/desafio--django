@@ -1,5 +1,6 @@
 
 from django.shortcuts import render
+from quiz.utlis import get_position_ranking_global, get_ranking_global
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -49,17 +50,18 @@ def finish_quiz(request):
             correct = query_question.answer == question['user_answer']
 
             if correct: score += 1
-        
+        user = User.objects.get(id=request.data.get('user'))
         quiz = Quiz.objects.create(
-                                    user = User.objects.all().first(),
+                                    user = user,
                                     score= score,
                                     category= Category.objects.get(id=category)
                                 )
 
         quiz.questions.set(quiz_questions)
         quiz.save()
-        
-        resp = {'score': score}
+
+        ranking = get_position_ranking_global(user)
+        resp = {'score': score,'ranking': ranking }
 
         return JsonResponse(resp)
 
