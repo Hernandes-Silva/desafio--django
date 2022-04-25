@@ -32,12 +32,13 @@ def finish_quiz(request):
     questions = request.data.get('questions')
     category = request.data.get('category')
     score = 0
+    
     quiz_questions = []
 
     if len(questions) <= 10:
         for question in questions:
             query_question =  Question.objects.get(id=question['question_id'], categories = category)
-
+            
             quiz_question = QuizQuestion.objects\
                                         .create(
                                             question=query_question,
@@ -48,8 +49,7 @@ def finish_quiz(request):
             correct = query_question.answer == question['user_answer']
 
             if correct: score += 1
-            elif score > 0: score -= 1
-
+        
         quiz = Quiz.objects.create(
                                     user = User.objects.all().first(),
                                     score= score,
@@ -59,9 +59,10 @@ def finish_quiz(request):
         quiz.questions.set(quiz_questions)
         quiz.save()
         
-        resp = {'status_code': 201, 'score': score}
+        resp = {'score': score}
 
         return JsonResponse(resp)
+
 
 
 
