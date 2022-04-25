@@ -2,6 +2,10 @@ from random import randint
 from django.urls import reverse
 import pytest
 
+from django.contrib.auth.models import User
+from quiz.utlis import get_position_ranking_global
+from tests.quiz.utils import fake_quiz
+
 @pytest.mark.django_db
 def test_post_finish_quiz(client, factory_questions, user):
     responseQ = client.get(reverse('generate-quiz', kwargs={'pk':factory_questions.id}))
@@ -19,11 +23,31 @@ def test_post_finish_quiz(client, factory_questions, user):
 
         answers_questions.append(answer_user)
     
-    payload = {'category': factory_questions.id, 'questions':answers_questions}
+    payload = {'category': factory_questions.id, 'questions':answers_questions, 'user':user.id}
     response = client.post(reverse('finish-quiz'), payload, format='json')
 
     assert response.status_code == 200
     assert response.json()['score'] == score
+
+@pytest.mark.django_db
+def test_get_ranking_geral(client, factory_questions, user):
+    # generate quiz for test ranking
+    fake_quiz(client, factory_questions, user, 5)
+    fake_quiz(client, factory_questions, user, 6)
+
+    user2 = User.objects.create_user(username='herna',
+                                 email='test@beatles.com',
+                                 password='glass onion')
+
+    fake_quiz(client, factory_questions, user2, 4)
+    fake_quiz(client, factory_questions, user2, 10)
+
+    assert  get_position_ranking_global(user) == 2
+                            
+
+    
+    
+
 
 
     
