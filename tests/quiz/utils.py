@@ -2,6 +2,11 @@ from django.urls import reverse
 
 def fake_quiz(client, factory_questions, user, correct):
     # Takes 10 questions and generates a quiz with 'correct' right questions
+    
+    response2 = client.post('/api/token/', {'username':user.username, 'password': 'glass onion'})
+    token  = response2.json()['access']
+    client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+
     responseQ = client.get(reverse('generate-quiz', kwargs={'pk':factory_questions.id}))
     
     answers_questions = []
@@ -22,3 +27,4 @@ def fake_quiz(client, factory_questions, user, correct):
 
     payload = {'category': factory_questions.id, 'questions':answers_questions, 'user':user.id}
     response = client.post(reverse('finish-quiz'), payload, format='json')
+
