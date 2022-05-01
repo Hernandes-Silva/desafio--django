@@ -9,6 +9,14 @@ def client():
     return APIClient()
 
 @pytest.fixture
+def Authclient(client, user):
+    response2 = client.post('/api/token/', {'username':'john', 'password': 'glass onion'})
+    token  = response2.json()['access']
+    client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+    return client
+    
+
+@pytest.fixture
 def user():
     user = User.objects.create_user(username='john',
                                  email='jlennon@beatles.com',
