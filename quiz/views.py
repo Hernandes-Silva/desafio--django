@@ -3,23 +3,29 @@ from django.shortcuts import render
 from quiz.utlis import get_position_ranking_global, get_ranking_global
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+
 import random
 from django.http import JsonResponse
 from quiz.models import Category, Question, Quiz, QuizQuestion
 from quiz.serializers import CategorySerializer, QuestionSerializer, QuizSerializer
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
 
 class APICategory(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 class APIQuestion(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Question.objects.all()
     serializer_class= QuestionSerializer
 
 @api_view(['GET',])
+@permission_classes([IsAuthenticated])
 def generate_quiz(request, pk):
     questions = list(Question.objects.filter(categories = pk))
     if len(questions) >=10:
@@ -28,6 +34,7 @@ def generate_quiz(request, pk):
     
     return Response(serializer.data)
 
+@permission_classes([IsAuthenticated])
 @api_view(['POST',])
 def finish_quiz(request):
     questions = request.data.get('questions')
