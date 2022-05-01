@@ -57,7 +57,7 @@ def finish_quiz(request):
             correct = query_question.answer == question['user_answer']
 
             if correct: score += 1
-        user = User.objects.get(id=request.data.get('user'))
+        user = request.user
         quiz = Quiz.objects.create(
                                     user = user,
                                     score= score,
