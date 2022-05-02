@@ -1,5 +1,6 @@
 
 from django.shortcuts import render
+from desafio.permissions import IsAdminOrReadOnly, IsAdminOrReadOnlyViewSet
 from quiz.utlis import get_position_ranking_global, get_ranking_global
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
@@ -14,16 +15,17 @@ from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
+
 class APICategory(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnlyViewSet]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
+    
 class APIQuestion(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Question.objects.all()
     serializer_class= QuestionSerializer
-
+    
 @api_view(['GET',])
 @permission_classes([IsAuthenticated])
 def generate_quiz(request, pk):
