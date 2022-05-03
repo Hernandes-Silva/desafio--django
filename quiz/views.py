@@ -15,14 +15,13 @@ from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
-
 class APICategory(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnlyViewSet]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     
 class APIQuestion(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnlyViewSet]
     queryset = Question.objects.all()
     serializer_class= QuestionSerializer
     
