@@ -19,7 +19,7 @@ class IsAdminOrReadOnlyViewSet(permissions.BasePermission):
 
 class IsAdminOrReadOnly(permissions.BasePermission):
 
-    def has_object_permission(self, request, view, obj):
+    def has_permission(self, request, view):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
 
@@ -32,8 +32,6 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
 class IsAdmin(permissions.BasePermission):
 
-    def has_object_permission(self, request, view, obj):
-
+    def has_permission(self, request, view):
         group = Group.objects.get(name="admin_quiz")
-        
         return group in request.user.groups.all()

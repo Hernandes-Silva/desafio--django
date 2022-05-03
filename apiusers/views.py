@@ -12,6 +12,7 @@ class APICreateUser(CreateAPIView):
     serializer_class = UserSerializer
 
 class APICreateAdmin(CreateAPIView):
+    permission_classes = [IsAuthenticated, IsAdmin]
     queryset = User.objects.all()
     serializer_class = AdminSerializer
-    permission_classes = [IsAuthenticated,IsAdmin]
+    
