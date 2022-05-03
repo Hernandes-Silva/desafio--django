@@ -29,3 +29,11 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         group = Group.objects.get(name="admin_quiz")
         
         return group in request.user.groups.all()
+
+class IsAdmin(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+
+        group = Group.objects.get(name="admin_quiz")
+        
+        return group in request.user.groups.all()
