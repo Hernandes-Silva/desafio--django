@@ -21,11 +21,23 @@ def question_f(category_f):
     return question
 
 @pytest.mark.django_db
-def test_post_question(Authclient, category_f):
+def test_post_question_forbidden(Authclient, category_f):
     payload = {'title': "question c", 'text': "question", 'a': "opção a",
                'b': "opção b", 'c': "opção C", 'answer': "a", 'categories':category_f.id}
 
     response = Authclient.post(reverse('question-list'), payload)
+
+    
+
+    assert response.status_code == 403
+    
+
+@pytest.mark.django_db
+def test_post_question(AuthAdmin, category_f):
+    payload = {'title': "question c", 'text': "question", 'a': "opção a",
+               'b': "opção b", 'c': "opção C", 'answer': "a", 'categories':category_f.id}
+
+    response = AuthAdmin.post(reverse('question-list'), payload)
 
     question = Question.objects.all().first()
 
@@ -54,7 +66,7 @@ def test_get_question_detail_err(Authclient, question_f):
     assert response.status_code == 404
 
 @pytest.mark.django_db
-def test_put_question_detail(Authclient, question_f):
+def test_put_question_detail_forbidden(Authclient, question_f):
     payload = {'title': "change title", 'text': question_f.text, 'a': question_f.a,
                'b': question_f.b, 'c': question_f.b, 'answer': question_f.answer, 
                'categories': question_f.categories.all().values_list('id', flat=True)}
@@ -62,12 +74,30 @@ def test_put_question_detail(Authclient, question_f):
     response = Authclient.put(reverse('question-detail', kwargs={'pk':question_f.id}), payload)
     question_f.refresh_from_db()
 
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_put_question_detail(AuthAdmin, question_f):
+    payload = {'title': "change title", 'text': question_f.text, 'a': question_f.a,
+               'b': question_f.b, 'c': question_f.b, 'answer': question_f.answer, 
+               'categories': question_f.categories.all().values_list('id', flat=True)}
+    
+    response = AuthAdmin.put(reverse('question-detail', kwargs={'pk':question_f.id}), payload)
+    question_f.refresh_from_db()
+
     assert response.status_code == 200
     assert question_f.title == payload['title']
 
 @pytest.mark.django_db
-def test_delete_question_detail(Authclient, question_f):
+def test_delete_question_detail_forbidden(Authclient, question_f):
     response = Authclient.delete(reverse('question-detail', kwargs={'pk':question_f.id}))
+    
+    assert response.status_code == 403
+
+@pytest.mark.django_db
+def test_delete_question_detail(AuthAdmin, question_f):
+    response = AuthAdmin.delete(reverse('question-detail', kwargs={'pk':question_f.id}))
     
     assert response.status_code == 204
     assert len(Question.objects.all()) == 0
