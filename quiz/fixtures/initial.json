@@ -1,0 +1,24 @@
+[
+    {
+        "model": "auth.group",
+        "fields": {
+        "name": "admin_quiz"
+        }
+    },
+    {
+        "model": "auth.group",
+        "fields": {
+        "name": "user_quiz"
+        }
+    },
+    { "model": "auth.user",
+        "fields": {
+            "username": "admin",
+            "password": "pbkdf2_sha256$320000$zv2gwjWT8OredAR8eINp1i$1W2mCdOnAp7Ef5rWAVRgh9cV0ogp2W/GOPqmpn/dmp0=",
+            "is_superuser": true,
+            "is_staff": true,
+            "is_active": true
+        }
+    }
+
+]
