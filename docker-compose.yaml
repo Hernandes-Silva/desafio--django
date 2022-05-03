@@ -4,6 +4,7 @@ services:
   db:
     container_name: db_quiz
     image: postgres
+    restart: always
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
@@ -13,7 +14,9 @@ services:
   web:
     container_name: 'web_quiz'
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    command: bash -c "python manage.py migrate &&
+                      python manage.py runserver 0.0.0.0:8000" 
     volumes:
       - .:/code
     ports:
