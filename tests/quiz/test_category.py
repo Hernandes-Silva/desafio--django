@@ -5,10 +5,10 @@ from quiz.models import Category
 # Create your tests here.
 
 @pytest.mark.django_db
-def test_post_category(Authclient):
+def test_post_category(AuthAdmin):
     payload = {'name':"Teste"}
 
-    response = Authclient.post(reverse('category-list'), payload)
+    response = AuthAdmin.post(reverse('category-list'), payload)
     category = Category.objects.get(id=response.data.get('id'))
 
     assert category.name == payload['name']
@@ -44,7 +44,7 @@ def test_put_category_detail(Authclient, category_f):
     assert category_f.name == payload['name']
 
 @pytest.mark.django_db
-def test_delete_category_deatil(Authclient, category_f):
+def test_delete_category_detail(Authclient, category_f):
     response = Authclient.delete(reverse('category-detail',kwargs={'pk':category_f.id}))
     
     assert response.status_code == 204

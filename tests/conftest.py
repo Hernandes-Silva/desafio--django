@@ -2,7 +2,14 @@ import pytest
 from quiz.models import Category, Question
 from rest_framework.test import APIClient
 from random import randint
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.core.management import call_command
+
+# loaddata initial.json
+@pytest.fixture(scope='session')
+def django_db_setup(django_db_setup, django_db_blocker):
+    with django_db_blocker.unblock():
+        call_command('loaddata', 'initial.json')
 
 @pytest.fixture
 def client():
@@ -14,13 +21,37 @@ def Authclient(client, user):
     token  = response2.json()['access']
     client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
     return client
+  
+@pytest.fixture  
+def AuthAdmin(client, admin):
+    response2 = client.post('/api/token/', {'username':'john', 'password': 'glass onion'})
     
+    token  = response2.json()['access']
+    client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+
+    return client
 
 @pytest.fixture
 def user():
     user = User.objects.create_user(username='john',
                                  email='jlennon@beatles.com',
                                  password='glass onion')
+
+    my_group = Group.objects.get(name='user_quiz') 
+    my_group.user_set.add(user)
+
+    return user
+
+
+@pytest.fixture
+def admin():
+    user = User.objects.create_user(username='john',
+                                 email='jlennon@beatles.com',
+                                 password='glass onion')
+
+    my_group = Group.objects.get(name='admin_quiz') 
+    my_group.user_set.add(user)           
+
     return user
 
 @pytest.fixture
