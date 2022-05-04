@@ -73,13 +73,15 @@ def finish_quiz(request):
 
         return JsonResponse(resp)
 
+@permission_classes([IsAuthenticated])
 @api_view(['get'])
 def ranking_global(request):
     ranking = get_ranking_global()
     serializer = RankingSerializer(ranking, many=True)
 
     return Response(serializer.data)
-
+    
+@permission_classes([IsAuthenticated])
 @api_view(['get'])
 def ranking_category(request, pk):
     ranking = get_ranking_category(pk)
