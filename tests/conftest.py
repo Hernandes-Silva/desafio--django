@@ -78,3 +78,22 @@ def factory_questions():
         question.save()
     
     return category
+
+@pytest.fixture
+def factory_questions2():
+    category = Category.objects.create(name="Category")
+    answers = ['a', 'b', 'c']
+    for x in range(20):
+        rand = randint(0,2)
+        question = Question.objects.create(title=f"Title {x}",
+                                       text=f"question {x}",
+                                       a=f"opção a {x}",
+                                       b=f"opção b {x}",
+                                       c=f"opção C {x}",
+                                       answer=answers[rand]
+                                       )
+
+        question.categories.add(category)
+        question.save()
+    
+    return category
