@@ -23,4 +23,13 @@ def get_position_ranking_global(user):
     ranking_user = list(ranking_global.values_list('user', flat=True)).index(user.id)+1
     
     return ranking_user
+
+def get_position_ranking_category(user, category):
+    soma_score = Sum('score')
+    ranking_category= Quiz.objects.filter(category=category).values('user')\
+                        .annotate(score_t=soma_score).order_by('-score_t')
+
+    ranking_user = list(ranking_category.values_list('user', flat=True)).index(user.id)+1
+    
+    return ranking_user
     
