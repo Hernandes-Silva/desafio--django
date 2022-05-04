@@ -30,7 +30,7 @@ def test_post_finish_quiz(Authclient, factory_questions, user):
     assert response.json()['score'] == score
 
 @pytest.mark.django_db
-def test_get_ranking_geral(Authclient, factory_questions, user):
+def test_get_position_ranking_geral(Authclient, factory_questions, user):
     # generate quiz for test ranking
     fake_quiz(Authclient, factory_questions, user, 5)
     fake_quiz(Authclient, factory_questions, user, 6)
