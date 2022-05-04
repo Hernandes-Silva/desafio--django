@@ -3,7 +3,7 @@ from django.urls import reverse
 import pytest
 
 from django.contrib.auth.models import User
-from quiz.utlis import get_position_ranking_global
+from quiz.utlis import get_position_ranking_category, get_position_ranking_global
 from tests.quiz.utils import fake_quiz
 
 @pytest.mark.django_db
@@ -30,7 +30,25 @@ def test_post_finish_quiz(Authclient, factory_questions, user):
     assert response.json()['score'] == score
 
 @pytest.mark.django_db
-def test_get_position_ranking_geral(Authclient, factory_questions,factory_questions2, user):
+def test_position_ranking_geral_and_category(Authclient, factory_questions,factory_questions2, user):
+    user2 = User.objects.create_user(username='herna',
+                                 email='test@beatles.com',
+                                 password='glass onion')
+
+    # generate quiz for test ranking
+    fake_quiz(Authclient, factory_questions, user, 5)
+    fake_quiz(Authclient, factory_questions2, user, 6)
+
+    fake_quiz(Authclient, factory_questions, user2, 4)
+    fake_quiz(Authclient, factory_questions2, user2, 10)
+    
+    assert  get_position_ranking_global(user2) == 1
+    assert  get_position_ranking_global(user) == 2
+    assert  get_position_ranking_category(user, factory_questions.id) == 1
+    assert  get_position_ranking_category(user, factory_questions2.id) == 2
+
+@pytest.mark.django_db
+def test_ranking_global_and_ranking_category(Authclient, factory_questions,factory_questions2, user):
     # generate quiz for test ranking
     fake_quiz(Authclient, factory_questions, user, 5)
     fake_quiz(Authclient, factory_questions2, user, 6)
@@ -42,8 +60,17 @@ def test_get_position_ranking_geral(Authclient, factory_questions,factory_questi
     fake_quiz(Authclient, factory_questions, user2, 4)
     fake_quiz(Authclient, factory_questions2, user2, 10)
     
+    
+    response_global= Authclient.get(reverse('ranking-global'))
+    
+    assert response_global.json()[0]['user'] == user2.id
+    assert response_global.json()[0]['score_t'] == 14
 
-    assert  get_position_ranking_global(user) == 2
+    response_category = Authclient.get(reverse('ranking-category', kwargs={'pk':factory_questions.id}))
+    
+    assert response_category.json()[1]['user'] == user2.id
+    assert response_category.json()[1]['score_t'] == 4
+   
                             
 
     
