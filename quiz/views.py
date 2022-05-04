@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
 from desafio.permissions import IsAdminOrReadOnly, IsAdminOrReadOnlyViewSet
-from quiz.utlis import get_position_ranking_global, get_ranking_global
+from quiz.utlis import get_position_ranking_global, get_ranking_category, get_ranking_global
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view, permission_classes
 import random
 from django.http import JsonResponse
 from quiz.models import Category, Question, Quiz, QuizQuestion
-from quiz.serializers import CategorySerializer, QuestionSerializer, QuizSerializer
+from quiz.serializers import CategorySerializer, QuestionSerializer, QuizSerializer, RankingSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 
@@ -72,6 +72,22 @@ def finish_quiz(request):
         resp = {'score': score,'ranking': ranking }
 
         return JsonResponse(resp)
+
+@api_view(['get'])
+def ranking_global(request):
+    ranking = get_ranking_global()
+    serializer = RankingSerializer(ranking, many=True)
+
+    return Response(serializer.data)
+
+@api_view(['get'])
+def ranking_category(request, pk):
+    ranking = get_ranking_category(pk)
+    serializer = RankingSerializer(ranking, many=True)
+
+    return Response(serializer.data)
+
+    
 
 
 
