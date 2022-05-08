@@ -39,4 +39,32 @@ No final do readme irei deixar a descrição do desafio que encontrei.
    - [x] Verificar o ranking por categoria
 - Não Users:
   - [x] Criar um usuário
+ 
+
+### Pré-requisitos
+
+Para executar esse projeto é necessario ter instalado na sua maquina o [git](https://git-scm.com/) e o [docker](https://www.docker.com/get-started/) em conjunto com docker-compose.
+
+### Executando a aplicação
+
+```bash
+
+# clone o projeto
+$ git clone https://github.com/Hernandes-Silva/desafio--django
+
+#acesse a pasta do projeto com o terminal/cmd
+$ cd desafio--django
+
+# e dê o comando:
+$ docker-compose up -d
+
+# agora basta esperar o sistema inicializar.
+# e entrar no http://127.0.0.1:8000/admin/
+# acessar com o login:admin e senha:admin
+# para criar um admin_quiz que pode criar categorias e questões
+# va em users depois admin e adicione ele ao grupo admin_quiz
+# agora você tem um admin_quiz que pode criar outros admin
+# através da url http://127.0.0.1:8000/api/admin-create/
+
+```
 
