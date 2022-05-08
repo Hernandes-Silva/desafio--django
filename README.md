@@ -7,8 +7,8 @@ No final do readme irei deixar a descrição do desafio que encontrei.
 </p>
 
 <p align="center">
- <a href="#-features">Features</a> •
  <a href="#pré-requisitos">Pré Requisitos</a> •
+ <a href="#-features">Features</a> •
  <a href="#rodando-o-mobile">Rodando a aplicação</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#autor">Autor</a>
@@ -16,6 +16,7 @@ No final do readme irei deixar a descrição do desafio que encontrei.
 
 ## 📩 Postman
 #### link de uma collection que está no postman com todas as urls da [API](https://documenter.getpostman.com/view/20832166/UyxdKp8P)
+
 <p align="center">
  <img src="https://github.com/Hernandes-Silva/desafio--django/blob/master/github/postman.png" height='70%' width='70%'>
  
