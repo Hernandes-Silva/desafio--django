@@ -67,4 +67,15 @@ $ docker-compose up -d
 # através da url http://127.0.0.1:8000/api/admin-create/
 
 ```
+### Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [Python3](https://www.python.org/downloads/)
+- [Django](https://www.djangoproject.com/)
+- [Django rest framework](https://www.django-rest-framework.org/)
+- [Pytest-django](https://pytest-django.readthedocs.io/en/latest/)
+- [Djangorestframework simplejwt](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html)
+- [GitHub](https://github.com/) 
+- [Docker](https://www.docker.com/get-started/) 
 
