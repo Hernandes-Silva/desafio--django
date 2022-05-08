@@ -12,7 +12,7 @@ router.register(r'question', APIQuestion, basename='question')
 urlpatterns = [
     path('', include(router.urls)),
     path('generate-quiz/<int:pk>/', generate_quiz, name='generate-quiz'),
-    path('finish-quiz', finish_quiz, name='finish-quiz'),
+    path('finish-quiz/', finish_quiz, name='finish-quiz'),
     path('ranking-global/', ranking_global, name='ranking-global'),
     path('ranking-category/<int:pk>/', ranking_category, name='ranking-category'),
 ]
