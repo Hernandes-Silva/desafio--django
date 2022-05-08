@@ -7,14 +7,14 @@ No final do readme irei deixar a descrição do desafio que encontrei.
 </p>
 
 <p align="center">
+ <a href="#postman">Postman</a> •
  <a href="#pré-requisitos">Pré Requisitos</a> •
  <a href="#-features">Features</a> •
- <a href="#rodando-o-mobile">Rodando a aplicação</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#autor">Autor</a>
 </p>
 
-## 📩 Postman
+## Postman
 #### link de uma collection que está no postman com todas as urls da [API](https://documenter.getpostman.com/view/20832166/UyxdKp8P)
 
 <p align="center">
@@ -22,7 +22,7 @@ No final do readme irei deixar a descrição do desafio que encontrei.
  
 </p>
 
-## ⚙️ Features
+## Features
 
 - Os Admins:
    - [x] Criar outro admin
