@@ -8,8 +8,8 @@ No final do readme irei deixar a descrição do desafio que encontrei.
 
 <p align="center">
  <a href="#postman">Postman</a> •
+ <a href="#features">Features</a> •
  <a href="#pré-requisitos">Pré Requisitos</a> •
- <a href="#-features">Features</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#autor">Autor</a>
 </p>
