@@ -28,6 +28,8 @@ class APIQuestion(viewsets.ModelViewSet):
 @api_view(['GET',])
 @permission_classes([IsAuthenticated])
 def generate_quiz(request, pk):
+    # Recebe pk de uma category e retorna 10 questões aleatórias dessa category
+
     questions = list(Question.objects.filter(categories = pk))
     if len(questions) >=10:
         questions = random.sample(questions, 10)
@@ -38,6 +40,10 @@ def generate_quiz(request, pk):
 @permission_classes([IsAuthenticated])
 @api_view(['POST',])
 def finish_quiz(request):
+    # Recebe por request a categoria e 10 questions com as respostas do usuário
+    # faz o calculo da pontuação e finaliza um quiz retornando a pontuação
+    # e o ranking global do usuário
+
     questions = request.data.get('questions')
     category = request.data.get('category')
     score = 0
