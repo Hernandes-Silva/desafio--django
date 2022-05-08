@@ -14,14 +14,14 @@ No final do readme irei deixar a descrição do desafio que encontrei.
  <a href="#autor">Autor</a>
 </p>
 
-## 📩Postman
+## 📩 Postman
 #### link de uma collection que está no postman com todas as urls da [API](https://documenter.getpostman.com/view/20832166/UyxdKp8P)
 <p align="center">
  <img src="https://github.com/Hernandes-Silva/desafio--django/blob/master/github/postman.png" height='70%' width='70%'>
  
 </p>
 
-## ⚙️Features
+## ⚙️ Features
 
 - Os Admins:
    - [x] Criar outro admin
