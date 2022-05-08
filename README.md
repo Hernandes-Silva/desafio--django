@@ -12,7 +12,7 @@ No final do readme irei deixar a descrição do desafio que encontrei.
  <a href="#pré-requisitos">Pré Requisitos</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#autor">Autor</a> •
- <a href="#descricao-do-desafio">Descrição do desafio</a>
+ <a href="#descrição-do-desafio">Descrição do desafio</a>
 </p>
 
 ## Postman
