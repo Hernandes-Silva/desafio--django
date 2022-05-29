@@ -1,5 +1,5 @@
 <h1 align="center">Quiz django</h1>
-<h3 align="center">teste de habildiades: Python, Django, Django REST Framework, Pytest e Docker</h3>
+<h3 align="center">teste de habilidades: Python, Django, Django REST Framework, Pytest e Docker</h3>
 
 <p >Esse quiz foi feito com a intenção de testar as minhas habilidades. Ao navegar pela internet achei um desafio em django
 bem interessante que aborda bem as habilidades necessarias para  desenvolver uma API em django.
