@@ -24,7 +24,7 @@ class APIQuestion(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminOrReadOnlyViewSet]
     queryset = Question.objects.all()
     serializer_class= QuestionSerializer
-    
+
 @api_view(['GET',])
 @permission_classes([IsAuthenticated])
 def generate_quiz(request, pk):
@@ -33,6 +33,9 @@ def generate_quiz(request, pk):
     questions = list(Question.objects.filter(categories = pk))
     if len(questions) >=10:
         questions = random.sample(questions, 10)
+    else:
+        questions = []
+    
     serializer = QuestionSerializer(questions, many=True)
     
     return Response(serializer.data)
