@@ -18,6 +18,7 @@ class QuizSerializer(serializers.ModelSerializer):
 class RankingSerializer(serializers.ModelSerializer):
     score_t = serializers.IntegerField()
     user = serializers.IntegerField()
+    user__first_name = serializers.CharField(max_length=250)
     class Meta:
         model = Quiz
-        fields = ('user', 'score_t')
+        fields = ('user','user__first_name', 'score_t')

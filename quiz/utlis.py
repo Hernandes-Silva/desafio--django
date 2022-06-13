@@ -1,16 +1,15 @@
 from quiz.models import Quiz
-from django.db.models import Sum
+from django.db.models import Sum, Index
 
 def get_ranking_global():
     soma_score = Sum('score')
-    ranking_global = Quiz.objects.all().values('user')\
+    ranking_global = Quiz.objects.all().values('user', 'user__first_name')\
                         .annotate(score_t=soma_score).order_by('-score_t')
-    
     return ranking_global
 
 def get_ranking_category(category):
     soma_score = Sum('score')
-    ranking_category = Quiz.objects.filter(category = category).values('user')\
+    ranking_category = Quiz.objects.filter(category = category).values('user', 'user__first_name')\
                         .annotate(score_t=soma_score).order_by('-score_t')
     
     return ranking_category
